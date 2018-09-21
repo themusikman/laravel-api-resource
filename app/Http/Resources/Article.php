@@ -24,6 +24,7 @@ class Article extends JsonResource
             'updated_at' => $this->updated_at
           ]
         ];
+        
     }
 
     // public function with($request){
