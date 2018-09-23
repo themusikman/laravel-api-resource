@@ -18,16 +18,28 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //list Articles
-Route::get('articles', 'ArticleController@index');
+// Route::get('articles', 'ArticleController@index');
+// Route::get('articles/{id}', 'ArticleController@show');
+// Route::post('articles', 'ArticleController@store');
+// Route::put('articles', 'ArticleController@store');
+// Route::delete('articles/{id}', 'ArticleController@destroy');
 
-//list single article
-Route::get('articles/{id}', 'ArticleController@show');
+Route::group(['prefix' => '/articles', 'middleware' => ['auth:api']], function(){
 
-//create new article
-Route::post('articles', 'ArticleController@store');
+  Route::get('/', 'ArticleController@index');
+  Route::get('/{id}', 'ArticleController@show');
+  Route::post('/', 'ArticleController@store');
+  Route::put('/', 'ArticleController@store');
+  Route::delete('/{id}', 'ArticleController@destroy');
 
-//update article
-Route::put('articles', 'ArticleController@store');
+});
 
-//delete article
-Route::delete('articles/{id}', 'ArticleController@destroy');
+Route::group(['prefix' => '/request/service', 'middleware' => ['auth:api']], function(){
+
+  Route::get('/', 'ServiceRequestController@index');
+  Route::get('/{id}', 'ServiceRequestController@show');
+  Route::post('/', 'ServiceRequestController@store');
+  Route::put('/', 'ServiceRequestController@store');
+  Route::delete('/{id}', 'ServiceRequestController@destroy');
+
+});
